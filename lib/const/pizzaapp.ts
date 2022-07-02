@@ -1,0 +1,1 @@
+export const pizzaAppEndpoint: string = 'https://private-anon-d884c0cb85-pizzaapp.apiary-mock.com';
