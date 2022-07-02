@@ -1,10 +1,9 @@
 import React, { useState, useReducer } from 'react';
 
 import { CartContext } from './cartContext';
-import { shopReducer, ADD_PRODUCT, REMOVE_PRODUCT } from './cartReducers';
+import { shopReducer, ADD_PRODUCT, REMOVE_PRODUCT, RESET_CART } from './cartReducers';
 
 const CartState = (props) => {
-    // const [cart, setCart] = useState([]);
     const [cartState, dispatch] = useReducer(shopReducer, { cart: [] });
 
     const addProductToCart = (product) => {
@@ -14,6 +13,9 @@ const CartState = (props) => {
     const removeProductFromCart = (productId) => {
         dispatch({ type: REMOVE_PRODUCT, productId: productId });
     };
+    const resetCart = () => {
+        dispatch({ type: RESET_CART });
+    };
 
     return (
         <CartContext.Provider
@@ -21,6 +23,7 @@ const CartState = (props) => {
                 cart: cartState.cart,
                 addProductToCart: addProductToCart,
                 removeProductFromCart: removeProductFromCart,
+                resetCart: resetCart
             }}
         >
             {props.children}

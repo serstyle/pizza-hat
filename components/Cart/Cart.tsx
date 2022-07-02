@@ -1,15 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router'
 import { CartContext } from '../../context/cartContext';
+import { postOrder } from '../../lib/api';
 import { Button } from '../Button/Button';
 
-export const Cart = () => {
+export interface IProps {
+    restaurantId: string;
+}
+
+export const Cart = ({restaurantId}: IProps) => {
     const [totalPrice, setTotalPrice] = useState(0)
+    
     const cartContext = useContext(CartContext);
-    const { addProductToCart, removeProductFromCart, cart } = cartContext;
+    const { addProductToCart, removeProductFromCart, cart, resetCart } = cartContext;
+    
+    const router = useRouter()
+    
     useEffect(()=>{
         const total = cart.reduce((pV, cV) => pV + (cV.price * cV.quantity) , 0 )
         setTotalPrice(total);
     }, [cart])
+
+    const handleOrder = async () => {
+        const order = await postOrder(cart, restaurantId);
+        resetCart();
+        router.push(`/orders/${order.orderId}`);
+    }
+
     return (
         <div>
             {cart.map((cartItem) => {
@@ -30,7 +47,7 @@ export const Cart = () => {
                                 </p>
                             )}
                         </div>
-                        <p className="w-2/12">{cartItem.price * cartItem.quantity}kr</p>
+                        <p className="w-2/12">{cartItem.price * cartItem.quantity} SEK</p>
                         <div>
                             <button onClick={()=>addProductToCart(cartItem)}>+</button>
                             <button onClick={()=>removeProductFromCart(cartItem.id)}>-</button>
@@ -39,8 +56,8 @@ export const Cart = () => {
                 );
             })}
             <div className="pt-3">
-                <p>Total: {totalPrice}kr</p>
-                <Button text='Order' /> 
+                <p>Total: <span className="font-semibold">{totalPrice} SEK</span></p>
+                <Button text='Order' onClick={handleOrder}/> 
             </div>
         </div>
     );

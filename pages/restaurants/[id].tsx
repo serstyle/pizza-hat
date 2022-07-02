@@ -59,7 +59,7 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
             )}
             {isOpen && (
                 <Modal title={'Your Cart'} onClose={() => setIsOpen(false)}>
-                    <Cart />
+                    <Cart restaurantId={id}/>
                 </Modal>
             )}
             <h1 className="text-2xl text-center">{restaurant.name}</h1>

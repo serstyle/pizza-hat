@@ -27,7 +27,7 @@ export const MenuItem = ({ menuItem }: IProps) => {
                     ))}
                 </p>
             )}
-            <p className="text-gray-500">{menuItem.price}KR</p>
+            <p className="text-gray-500">{menuItem.price} SEK</p>
             <Button onClick={() => addProductToCart(menuItem)} text={'Add'} />
         </div>
     );
