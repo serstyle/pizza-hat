@@ -37,7 +37,7 @@ export const ListMenu = ({ menu }: IProps) => {
             {categoriesWithItems?.map((cwi, i) => {
                 return (
                     <div key={i}>
-                        <h3 className='text-xl font-bold px-4 pt-4 pb-1 border-y'>{cwi.category}</h3>
+                        <h3 className='text-xl font-bold px-4 pt-4 pb-1 border-y bg-gray-50'>{cwi.category}</h3>
                         {cwi.menuItems.map((menuItem) => {
                             return (
                                 <React.Fragment key={menuItem.id}>

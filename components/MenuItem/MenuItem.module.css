@@ -2,5 +2,5 @@
     @apply mx-4 my-4 pb-4 border-b;
 }
 .menuItem:last-child {
-    @apply mx-4 my-4 pb-4 border-b-0;
+    @apply border-b-0;
 }
