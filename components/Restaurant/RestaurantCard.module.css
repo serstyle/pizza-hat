@@ -1,0 +1,6 @@
+.restaurantCard {
+    @apply block py-4 px-4 cursor-pointer shadow-sm mb-4 transition-shadow;
+}
+.restaurantCard:hover {
+    @apply py-4 px-4 cursor-pointer shadow-none mb-4;
+}
