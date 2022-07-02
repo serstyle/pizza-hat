@@ -10,3 +10,11 @@ export interface IRestaurant {
 export interface ISortedRestaurant extends IRestaurant {
     distanceFromUser: number;
 }
+export interface IMenuItem {
+    id: number;
+    category: string;
+    name: string;
+    topping?: string[];
+    price: number;
+    rank?: number;
+}
