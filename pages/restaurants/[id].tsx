@@ -24,7 +24,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    console.log(params);
     //Here we need to use getRestaurant but the API always render the same restaurant ... see api.ts line 11
     const restaurants = await loadRestaurants();
     const restaurant = restaurants.find((r) => r.id === +params.id);
@@ -58,11 +57,11 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
                 </button>
             )}
             {isOpen && (
-                <Modal title={'Your Cart'} onClose={() => setIsOpen(false)}>
+                <Modal isOpen={isOpen} title={'Your Cart'} onClose={() => setIsOpen(false)}>
                     <Cart restaurantId={id}/>
                 </Modal>
             )}
-            <h1 className="text-2xl text-center">{restaurant.name}</h1>
+            <h1 className="text-2xl text-center py-4">{restaurant.name}</h1>
             {error && <p>There is an error.</p>}
             {!data ? <p>Loading...</p> : <ListMenu menu={data} />}
         </div>
