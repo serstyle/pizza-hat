@@ -8,6 +8,7 @@ import { CartContext } from '../../context/cartContext';
 import { getMenu, loadRestaurants } from '../../lib/api';
 import { pizzaAppEndpoint } from '../../lib/const/pizzaapp';
 import useFetch from '../../lib/hooks/useFetch';
+import { useLocalStorage } from '../../lib/hooks/useLocaleStorage';
 import { IMenuItem, IRestaurant } from '../../types';
 
 export interface IProps {
@@ -34,12 +35,22 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
     const router = useRouter();
     const { id } = router.query;
     const { data, error } = useFetch<IMenuItem[]>(`${pizzaAppEndpoint}/restaurants/${id}/menu`);
-    
+    const [localRestaurant, setLocalRestaurant] = useLocalStorage<string>('restaurant', '');
+
     const cartContext = useContext(CartContext);
-    const { cart } = cartContext;
+    const { cart, resetCart } = cartContext;
 
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+
+
+    useEffect(()=>{
+        if(localRestaurant !== id) {
+            console.log(localRestaurant, id)
+            resetCart();
+            setLocalRestaurant(id);
+        }
+    }, [])
 
     useEffect(() => {
         const total = cart.reduce((pV, cV) => pV + cV.quantity, 0);

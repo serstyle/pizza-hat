@@ -1,20 +1,48 @@
-import React, { useState, useReducer } from 'react';
+import { useRouter } from 'next/router';
+import React, { useReducer, useEffect, ReactNode } from 'react';
+import { useLocalStorage } from '../lib/hooks/useLocaleStorage';
+import { ICartItem, IMenuItem } from '../types';
 
 import { CartContext } from './cartContext';
-import { shopReducer, ADD_PRODUCT, REMOVE_PRODUCT, RESET_CART } from './cartReducers';
+import { cartReducer, CartActionKind } from './cartReducers';
 
-const CartState = (props) => {
-    const [cartState, dispatch] = useReducer(shopReducer, { cart: [] });
+export interface IProps {
+    children: ReactNode;
+}
+const CartState = (props: IProps) => {
+    const router = useRouter();
+    const { id } = router.query;
+    
+    const [cartState, dispatch] = useReducer(cartReducer, { cart: [] });
 
-    const addProductToCart = (product) => {
-        dispatch({ type: ADD_PRODUCT, product: product });
+    const [localCart, setLocalCart] = useLocalStorage<any>('cart', cartState);
+    const [localRestaurant] = useLocalStorage<string>('restaurant', '');
+
+    useEffect(() => {
+        setLocalCart(cartState);
+    }, [cartState]);
+
+    useEffect(() => {
+        if(!id) {
+            setCart(localCart.cart);
+        }
+        if(id && id === localRestaurant) {
+            setCart(localCart.cart);
+        }
+    }, []);
+
+    const addProductToCart = (product: IMenuItem) => {
+        dispatch({ type: CartActionKind.ADD_PRODUCT, product });
     };
 
-    const removeProductFromCart = (productId) => {
-        dispatch({ type: REMOVE_PRODUCT, productId: productId });
+    const removeProductFromCart = (productId: number) => {
+        dispatch({ type: CartActionKind.REMOVE_PRODUCT, productId });
     };
     const resetCart = () => {
-        dispatch({ type: RESET_CART });
+        dispatch({ type: CartActionKind.RESET_CART });
+    };
+    const setCart = (cart: ICartItem[]) => {
+        dispatch({ type: CartActionKind.SET_CART, cart });
     };
 
     return (
@@ -23,7 +51,8 @@ const CartState = (props) => {
                 cart: cartState.cart,
                 addProductToCart: addProductToCart,
                 removeProductFromCart: removeProductFromCart,
-                resetCart: resetCart
+                resetCart: resetCart,
+                setCart,
             }}
         >
             {props.children}
