@@ -14,6 +14,7 @@ export const ListMenu = ({ menu }: IProps) => {
     
     useEffect(() => {
         if (menu) {
+            {/* @ts-ignore: */}
             const categories = [...new Set(menu.map((o) => o.category))];
             const sortedByCategory = categories.map((c) => {
                 return {

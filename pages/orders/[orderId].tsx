@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
-import { Button, LinkButton } from '../../components/Button/Button';
+import { LinkButton } from '../../components/Button/Button';
 
 import { getOrderWithMenuAndRestaurant } from '../../lib/api';
 import { IOrderResponseWithFullCart } from '../../types';

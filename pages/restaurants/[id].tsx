@@ -1,5 +1,6 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { ParsedUrlQuery } from 'querystring';
 import React, { useContext, useEffect, useState } from 'react';
 import { Cart } from '../../components/Cart/Cart';
 import { ListMenu } from '../../components/ListMenu/ListMenu';
@@ -27,7 +28,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     //Here we need to use getRestaurant but the API always render the same restaurant ... see api.ts line 11
     const restaurants = await loadRestaurants();
-    const restaurant = restaurants.find((r) => r.id === +params.id);
+    // Could also use @ts-ignore:
+    const restaurant = restaurants.find((r) => r.id === +((params as ParsedUrlQuery).id as string) );
     return { props: { restaurant } };
 };
 
