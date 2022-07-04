@@ -5,6 +5,7 @@ export enum CartActionKind {
     REMOVE_PRODUCT = 'REMOVE_PRODUCT',
     RESET_CART = 'RESET_CART',
     SET_CART = 'SET_CART',
+    SET_RESTAURANT = 'SET_RESTAURANT',
 }
 
 export interface CartAction {
@@ -12,10 +13,12 @@ export interface CartAction {
     product?: IMenuItem 
     productId?: number 
     cart?: ICartItem[];
+    restaurantId?: string;
 }
 
 export interface CartState {
     cart: ICartItem[];
+    restaurantId: string | null;
 }
 
 const addProductToCart = (product: IMenuItem, state: CartState) => {
@@ -56,6 +59,9 @@ const resetCart = (_action: CartAction, state: CartState) => {
 const setCart = (cart: ICartItem[], state: CartState) => {
     return { ...state, cart };
 };
+const setRestaurant = (restaurantId: string, state: CartState) => {
+    return { ...state, restaurantId };
+};
 
 export const cartReducer = (state: CartState, action: CartAction) => {
     switch (action.type) {
@@ -67,6 +73,8 @@ export const cartReducer = (state: CartState, action: CartAction) => {
             return resetCart(action, state);
         case CartActionKind.SET_CART:
             return setCart(<ICartItem[]>action.cart, state);
+        case CartActionKind.SET_RESTAURANT:
+            return setRestaurant(<string>action.restaurantId, state);
         default:
             return state;
     }

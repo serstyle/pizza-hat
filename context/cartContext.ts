@@ -3,15 +3,19 @@ import { ICartItem, IMenuItem } from '../types';
 
 export interface ICartContext {
     cart: ICartItem[];
+    restaurantId: string | null;
     addProductToCart: (product: IMenuItem) => void;
     removeProductFromCart: (productId: number) => void;
     resetCart: () => void;
     setCart: (cart:ICartItem[]) => void;
+    setRestaurant: (restaurantId:string) => void;
 }
 export const CartContext = React.createContext<ICartContext>({
     cart: [],
-    addProductToCart: (product) => {},
-    removeProductFromCart: (productId) => {},
+    restaurantId: null,
+    addProductToCart: () => {},
+    removeProductFromCart: () => {},
     resetCart: () => {},
-    setCart: () => {}
+    setCart: () => {},
+    setRestaurant: () => {},
 });

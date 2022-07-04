@@ -1,10 +1,15 @@
-import {NavigationBar} from '../Navbar/Navbar'
+import { ReactNode } from 'react';
+import { NavigationBar } from '../Navbar/Navbar';
 
-export default function Layout({ children }) {
-  return (
-    <>
-      <NavigationBar />
-        <main className="mt-16">{children}</main>
-    </>
-  )
+export interface IProps {
+    children: ReactNode;
+}
+
+export default function Layout({ children }: IProps) {
+    return (
+        <>
+            <NavigationBar />
+            <main className="pt-16 max-w-7xl mx-auto">{children}</main>
+        </>
+    );
 }

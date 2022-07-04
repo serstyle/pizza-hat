@@ -5,7 +5,7 @@ import { Cart } from '../../components/Cart/Cart';
 import { ListMenu } from '../../components/ListMenu/ListMenu';
 import { Modal } from '../../components/Modal/Modal';
 import { CartContext } from '../../context/cartContext';
-import { getMenu, loadRestaurants } from '../../lib/api';
+import { loadRestaurants } from '../../lib/api';
 import { pizzaAppEndpoint } from '../../lib/const/pizzaapp';
 import useFetch from '../../lib/hooks/useFetch';
 import { useLocalStorage } from '../../lib/hooks/useLocaleStorage';
@@ -35,33 +35,37 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
     const router = useRouter();
     const { id } = router.query;
     const { data, error } = useFetch<IMenuItem[]>(`${pizzaAppEndpoint}/restaurants/${id}/menu`);
-    const [localRestaurant, setLocalRestaurant] = useLocalStorage<string>('restaurant', '');
+    const [localCart] = useLocalStorage<any>('cart', '');
 
     const cartContext = useContext(CartContext);
-    const { cart, resetCart } = cartContext;
+    const { cart, resetCart, setRestaurant } = cartContext;
 
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
 
 
     useEffect(()=>{
-        if(localRestaurant !== id) {
-            console.log(localRestaurant, id)
+        setRestaurant(id as string);
+        if(localCart.restaurantId !== id) {
             resetCart();
-            setLocalRestaurant(id);
         }
-    }, [])
+    }, [id])
 
+
+    // Calculate cart length and close modal if it's empty
     useEffect(() => {
         const total = cart.reduce((pV, cV) => pV + cV.quantity, 0);
         setTotalQuantity(total);
         !cart.length && setIsOpen(false) 
     }, [cart]);
+
+
+
     return (
-        <div>
+        <div className="mb-20">
             {totalQuantity > 0 && (
                 <button
-                    className="fixed bottom-8 left-1/2 -translate-x-1/2 w-4/5 py-2 bg-black text-center text-white"
+                    className="fixed bottom-8 left-1/2 max-w-md -translate-x-1/2 w-4/5 py-2 bg-black text-center text-white"
                     onClick={() => setIsOpen(true)}
                 >
                     Open Cart ({totalQuantity})
@@ -69,7 +73,7 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
             )}
             {isOpen && (
                 <Modal isOpen={isOpen} title={'Your Cart'} onClose={() => setIsOpen(false)}>
-                    <Cart restaurantId={id}/>
+                    <Cart restaurantId={id as string}/>
                 </Modal>
             )}
             <h1 className="text-2xl text-center py-4">{restaurant.name}</h1>
