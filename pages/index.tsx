@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { loadRestaurants } from '../lib/api';
 import { IRestaurant } from '../types';
-import { useEffect } from 'react';
 import { Restaurants } from '../components/Restaurants/Restaurants';
 
 export interface IProps {
@@ -16,9 +15,6 @@ export async function getStaticProps() {
 }
 
 const Home: NextPage<IProps> = ({ restaurants }) => {
-    useEffect(() => {
-        console.log(restaurants);
-    }, []);
     return (
         <div>
             <Head>

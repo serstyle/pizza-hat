@@ -16,8 +16,10 @@ export const RestaurantCard = ({ restaurant }: IProps) => {
                 <p className="font-bold text-xl">{restaurant.name}</p>
                 <p>{restaurant.address1}</p>
                 <p className="text-gray-400">{restaurant.address2}</p>
-                <p className="text-gray-400">{restaurant.distanceFromUser.toFixed(2)}KM away from you</p>
-                <Button text={'See Menu'}/>
+                {restaurant.distanceFromUser && (
+                    <p className="text-gray-400">{restaurant.distanceFromUser.toFixed(2)}KM away from you</p>
+                )}
+                <Button text={'See Menu'} />
             </a>
         </Link>
     );
