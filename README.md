@@ -1,3 +1,6 @@
+## See Live
+https://pizza-hat.vercel.app/
+
 ## Tech stack
 Using NextJS with Typescript and tailwind.
 
