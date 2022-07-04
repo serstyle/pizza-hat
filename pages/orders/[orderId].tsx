@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
-import { Button } from '../../components/Button/Button';
+import { Button, LinkButton } from '../../components/Button/Button';
 
 import { getOrderWithMenuAndRestaurant } from '../../lib/api';
 import { IOrderResponseWithFullCart } from '../../types';
@@ -46,8 +46,8 @@ const OrderView: NextPage<IProps> = ({ orderWithMenuAndRestaurant }) => {
                     Total: <span className="font-semibold">{orderWithMenuAndRestaurant.totalPrice} SEK</span>
                 </p>
             </div>
-            <Link href={`/restaurants/${orderWithMenuAndRestaurant.restuarantId}`}>
-                <Button text="Order Again" />
+            <Link passHref href={`/restaurants/${orderWithMenuAndRestaurant.restuarantId}`}>
+                <LinkButton text={"Order Again"}/>
             </Link>
         </div>
     );
