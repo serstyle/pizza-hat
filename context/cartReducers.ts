@@ -6,6 +6,8 @@ export enum CartActionKind {
     RESET_CART = 'RESET_CART',
     SET_CART = 'SET_CART',
     SET_RESTAURANT = 'SET_RESTAURANT',
+    ADD_ORDER = 'ADD_ORDER',
+    SET_ORDERS = 'SET_ORDERS',
 }
 
 export interface CartAction {
@@ -14,11 +16,14 @@ export interface CartAction {
     productId?: number 
     cart?: ICartItem[];
     restaurantId?: string;
+    orderId?: string;
+    ordersId?: string[];
 }
 
 export interface CartState {
     cart: ICartItem[];
     restaurantId: string | null;
+    ordersId: string[];
 }
 
 const addProductToCart = (product: IMenuItem, state: CartState) => {
@@ -62,6 +67,13 @@ const setCart = (cart: ICartItem[], state: CartState) => {
 const setRestaurant = (restaurantId: string, state: CartState) => {
     return { ...state, restaurantId };
 };
+const addOrder = (orderId: string, state: CartState) => {
+    console.log(orderId, state)
+    return { ...state, ordersId: [...state.ordersId, orderId] };
+};
+const setOrders = (ordersId: string[], state: CartState) => {
+    return { ...state, ordersId };
+};
 
 export const cartReducer = (state: CartState, action: CartAction) => {
     switch (action.type) {
@@ -75,6 +87,10 @@ export const cartReducer = (state: CartState, action: CartAction) => {
             return setCart(<ICartItem[]>action.cart, state);
         case CartActionKind.SET_RESTAURANT:
             return setRestaurant(<string>action.restaurantId, state);
+        case CartActionKind.ADD_ORDER:
+            return addOrder(<string>action.orderId, state);
+        case CartActionKind.SET_ORDERS:
+            return setOrders(<string[]>action.ordersId, state);
         default:
             return state;
     }

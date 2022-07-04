@@ -13,15 +13,17 @@ const CartState = (props: IProps) => {
     const router = useRouter();
     const { id } = router.query;
 
-    const [cartState, dispatch] = useReducer(cartReducer, { cart: [], restaurantId: null, 
-     });
+    const [cartState, dispatch] = useReducer(cartReducer, { cart: [], restaurantId: null, ordersId: []});
 
     const [localCart, setLocalCart] = useLocalStorage<any>('cart', cartState);
-    const [localRestaurant] = useLocalStorage<string>('restaurant', '');
 
     useEffect(() => {
         setLocalCart(cartState);
     }, [cartState]);
+
+    useEffect(() => {
+        setOrders(localCart.ordersId);
+    }, []);
 
     useEffect(() => {
         if (id && id !== localCart.restaurantId) {
@@ -56,17 +58,26 @@ const CartState = (props: IProps) => {
     const setRestaurant = (restaurantId: string) => {
         dispatch({ type: CartActionKind.SET_RESTAURANT, restaurantId });
     };
+    const addOrder = (orderId: string) => {
+        dispatch({ type: CartActionKind.ADD_ORDER, orderId });
+    };
+    const setOrders = (ordersId: string[]) => {
+        dispatch({ type: CartActionKind.SET_ORDERS, ordersId });
+    };
 
     return (
         <CartContext.Provider
             value={{
                 cart: cartState.cart,
                 restaurantId: cartState.restaurantId,
+                ordersId: cartState.ordersId,
                 addProductToCart: addProductToCart,
                 removeProductFromCart: removeProductFromCart,
                 resetCart: resetCart,
                 setCart,
                 setRestaurant,
+                addOrder,
+                setOrders
             }}
         >
             {props.children}

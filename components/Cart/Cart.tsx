@@ -12,7 +12,7 @@ export const Cart = ({restaurantId}: IProps) => {
     const [totalPrice, setTotalPrice] = useState(0)
     
     const cartContext = useContext(CartContext);
-    const { addProductToCart, removeProductFromCart, cart, resetCart } = cartContext;
+    const { addProductToCart, removeProductFromCart, cart, resetCart, addOrder } = cartContext;
     
     const router = useRouter()
     
@@ -24,7 +24,8 @@ export const Cart = ({restaurantId}: IProps) => {
     const handleOrder = async () => {
         const order = await postOrder(cart, restaurantId);
         resetCart();
-        router.push(`/orders/${order.orderId}`);
+        addOrder(`${order?.orderId}`);
+        router.push(`/orders/${order?.orderId}`);
     }
 
     return (
