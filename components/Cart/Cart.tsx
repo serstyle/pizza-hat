@@ -48,8 +48,8 @@ export const Cart = ({restaurantId}: IProps) => {
                                 </p>
                             )}
                         </div>
-                        <p className="w-2/12">{cartItem.price * cartItem.quantity} SEK</p>
-                        <div>
+                        <p className="w-3/12">{cartItem.price * cartItem.quantity} SEK</p>
+                        <div className="w-1/12 flex flex-col justify-between text-2xl">
                             <button onClick={()=>addProductToCart(cartItem)}>+</button>
                             <button onClick={()=>removeProductFromCart(cartItem.id)}>-</button>
                         </div>

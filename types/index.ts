@@ -8,7 +8,7 @@ export interface IRestaurant {
 }
 
 export interface ISortedRestaurant extends IRestaurant {
-    distanceFromUser: number;
+    distanceFromUser?: number;
 }
 export interface IMenuItem {
     id: number;

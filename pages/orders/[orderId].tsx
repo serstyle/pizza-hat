@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const OrderView: NextPage<IProps> = ({ orderWithMenuAndRestaurant }) => {
     return (
-        <div className="mx-4">
+        <div className="mx-4 p-4 bg-white">
             <h2 className="text-center">Order no.{orderWithMenuAndRestaurant.orderId}</h2>
             <h3 className="font-bold text-xl mb-4">{orderWithMenuAndRestaurant.restaurant?.name}</h3>
             <div className="mb-4">

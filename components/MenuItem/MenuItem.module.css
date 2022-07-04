@@ -1,5 +1,5 @@
 .menuItem {
-    @apply mx-4 my-4 pb-4 border-b;
+    @apply px-4 py-4 border-b bg-white;
 }
 .menuItem:last-child {
     @apply border-b-0;

@@ -1,5 +1,5 @@
 .navbar {
-    @apply fixed top-0 w-full bg-white border-b z-10;
+    @apply fixed top-0 left-0 w-full bg-white border-b z-10;
 }
 
 .navbar li a {

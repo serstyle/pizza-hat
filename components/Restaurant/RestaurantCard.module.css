@@ -1,5 +1,5 @@
 .restaurantCard {
-    @apply block py-4 px-4 cursor-pointer shadow-sm mb-4 transition-shadow;
+    @apply block py-4 px-4 cursor-pointer shadow-sm mb-4 transition-shadow bg-white;
 }
 .restaurantCard:hover {
     @apply py-4 px-4 cursor-pointer shadow-none mb-4;
