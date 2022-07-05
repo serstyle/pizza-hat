@@ -14,10 +14,7 @@ export const ListMenu = ({ menu }: IProps) => {
 
     useEffect(() => {
         if (menu) {
-            {
-                /* @ts-ignore: */
-            }
-            const categories = [...new Set(menu.map((o) => o.category))];
+            const categories = Array.from(new Set(menu.map((o) => o.category)));
             const sortedByCategory = categories.map((c) => {
                 return {
                     category: c,
@@ -40,7 +37,9 @@ export const ListMenu = ({ menu }: IProps) => {
             {categoriesWithItems?.map((cwi, i) => {
                 return (
                     <div className="md:px-4" key={i}>
-                        <h3 className="text-xl font-bold px-4 pt-4 pb-1 border-y bg-gray-50 md:text-center">{cwi.category}</h3>
+                        <h3 className="text-xl font-bold px-4 pt-4 pb-1 border-y bg-gray-50 md:text-center">
+                            {cwi.category}
+                        </h3>
                         <div className="grid md:grid-cols-2 md:gap-2 md:my-4 lg:grid-cols-3">
                             {cwi.menuItems.map((menuItem) => {
                                 return (
