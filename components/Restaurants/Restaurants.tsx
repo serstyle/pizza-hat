@@ -29,7 +29,7 @@ export const Restaurants = ({ restaurants }: IProps) => {
     };
 
     return (
-        <div className="grid px-4">
+        <div className="grid px-4 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
             {sortedRestaurants?.map((restaurant, i) => (
                 <div key={i}>
                     <RestaurantCard restaurant={restaurant} />

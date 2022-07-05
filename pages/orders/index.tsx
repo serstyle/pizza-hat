@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../../context/cartContext';
@@ -13,7 +14,7 @@ const OrdersView: NextPage = () => {
 
     useEffect(() => {
         (async () => {
-            setIsLoading(true)
+            setIsLoading(true);
             const orders = await Promise.all(
                 ordersId.map(async (orderId): Promise<IOrderResponseWithFullCart> => {
                     const order = await getOrderWithMenuAndRestaurant(orderId);
@@ -29,6 +30,10 @@ const OrdersView: NextPage = () => {
 
     return (
         <div className="mx-4 p-4 bg-white">
+            <Head>
+                <title>Your Orders - Pizza Hatttttt</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             {isLoading && <div>...Loading</div>}
             {!isLoading && !orders?.length && (
                 <div>
@@ -42,21 +47,24 @@ const OrdersView: NextPage = () => {
                 </div>
             )}
             {/* All the orders will looks the same since the mock api always return the same order from the post create API */}
-            {!isLoading && orders?.map((order, i) => {
-                return (
-                    <div key={i} className="mb-8">
-                        <Link href={`/orders/${order.orderId}`}>
-                            <a>
-                                <p className="font-semibold">{order.restaurant?.name}</p>
-                                <p>Estimated Delivery: {order.esitmatedDelivery}</p>
-                                <p>Status: {order.status}</p>
-                                <p>{order.totalPrice} SEK</p>
-                                <p className="text-blue-500 hover:text-blue-800">See more about no.{order.orderId}</p>
-                            </a>
-                        </Link>
-                    </div>
-                );
-            })}
+            {!isLoading &&
+                orders?.map((order, i) => {
+                    return (
+                        <div key={i} className="mb-8">
+                            <Link href={`/orders/${order.orderId}`}>
+                                <a>
+                                    <p className="font-semibold">{order.restaurant?.name}</p>
+                                    <p>Estimated Delivery: {order.esitmatedDelivery}</p>
+                                    <p>Status: {order.status}</p>
+                                    <p>{order.totalPrice} SEK</p>
+                                    <p className="text-blue-500 hover:text-blue-800">
+                                        See more about no.{order.orderId}
+                                    </p>
+                                </a>
+                            </Link>
+                        </div>
+                    );
+                })}
         </div>
     );
 };

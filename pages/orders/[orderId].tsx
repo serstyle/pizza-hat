@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { LinkButton } from '../../components/Button/Button';
 
@@ -21,6 +22,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const OrderView: NextPage<IProps> = ({ orderWithMenuAndRestaurant }) => {
     return (
         <div className="mx-4 p-4 bg-white">
+            <Head>
+                <title>Order no.{orderWithMenuAndRestaurant.orderId} - Pizza Hatttttt</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <h2 className="text-center">Order no.{orderWithMenuAndRestaurant.orderId}</h2>
             <h3 className="font-bold text-xl mb-4">{orderWithMenuAndRestaurant.restaurant?.name}</h3>
             <div className="mb-4">

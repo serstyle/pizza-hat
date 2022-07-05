@@ -6,6 +6,8 @@ Using NextJS with Typescript and tailwind.
 
 
 ## Recap
+Design is Mobile oriented
+
 You can do : 
 - Choose between restaurant
 - Add item to your cart

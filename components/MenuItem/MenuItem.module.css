@@ -1,6 +1,7 @@
 .menuItem {
-    @apply px-4 py-4 border-b bg-white;
+    @apply px-4 py-4 border-b bg-white md:border flex flex-col justify-between; 
+
 }
 .menuItem:last-child {
-    @apply border-b-0;
+    @apply border-b-0 md:border-b;
 }

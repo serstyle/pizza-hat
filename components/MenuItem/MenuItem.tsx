@@ -17,17 +17,19 @@ export const MenuItem = ({ menuItem }: IProps) => {
     }, [cart]);
     return (
         <div className={`${s.menuItem}`}>
-            <p className="font-bold">
-                {itemQuantity > 0 && `${itemQuantity}x `} {menuItem.name}
-            </p>
-            {menuItem.topping && (
-                <p className="text-gray-500 mb-1">
-                    {menuItem.topping.map((t, i) => (
-                        <span key={i}>{t},&nbsp;</span>
-                    ))}
+            <div>
+                <p className="font-bold">
+                    {itemQuantity > 0 && `${itemQuantity}x `} {menuItem.name}
                 </p>
-            )}
-            <p className="text-gray-500">{menuItem.price} SEK</p>
+                {menuItem.topping && (
+                    <p className="text-gray-500 mb-1">
+                        {menuItem.topping.map((t, i) => (
+                            <span key={i}>{t},&nbsp;</span>
+                        ))}
+                    </p>
+                )}
+                <p className="text-gray-500">{menuItem.price} SEK</p>
+            </div>
             <Button onClick={() => addProductToCart(menuItem)} text={'Add'} />
         </div>
     );

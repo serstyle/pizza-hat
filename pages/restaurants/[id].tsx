@@ -1,7 +1,9 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import React, { useContext, useEffect, useState } from 'react';
+import { DarkButton } from '../../components/Button/Button';
 import { Cart } from '../../components/Cart/Cart';
 import { ListMenu } from '../../components/ListMenu/ListMenu';
 import { Modal } from '../../components/Modal/Modal';
@@ -29,7 +31,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     //Here we need to use getRestaurant but the API always render the same restaurant ... see api.ts line 11
     const restaurants = await loadRestaurants();
     // Could also use @ts-ignore:
-    const restaurant = restaurants.find((r) => r.id === +((params as ParsedUrlQuery).id as string) );
+    const restaurant = restaurants.find((r) => r.id === +((params as ParsedUrlQuery).id as string));
     return { props: { restaurant } };
 };
 
@@ -46,20 +48,18 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [orderLoading, setOrderLoading] = useState(false);
 
-
-    useEffect(()=>{
+    useEffect(() => {
         setRestaurant(id as string);
-        if(localCart.restaurantId !== id) {
+        if (localCart.restaurantId !== id) {
             resetCart();
         }
-    }, [id])
-
+    }, [id]);
 
     // Calculate cart length and close modal if it's empty
     useEffect(() => {
         const total = cart.reduce((pV, cV) => pV + cV.quantity, 0);
         setTotalQuantity(total);
-        !cart.length && setIsOpen(false) 
+        !cart.length && setIsOpen(false);
     }, [cart]);
 
     if (orderLoading) {
@@ -68,17 +68,21 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
 
     return (
         <div className="mb-20">
+            <Head>
+                <title>{restaurant.name} - Pizza Hatttttt</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             {totalQuantity > 0 && (
-                <button
-                    className="fixed bottom-8 left-1/2 max-w-md -translate-x-1/2 w-4/5 py-2 bg-black text-center text-white"
+                <div
+                    className="fixed bottom-8 left-1/2 max-w-md -translate-x-1/2 w-4/5 text-center text-white"
                     onClick={() => setIsOpen(true)}
                 >
-                    Open Cart ({totalQuantity})
-                </button>
+                    <DarkButton fullWidth text={`Open Cart (${totalQuantity})`} />
+                </div>
             )}
             {isOpen && (
                 <Modal isOpen={isOpen} title={'Your Cart'} onClose={() => setIsOpen(false)}>
-                    <Cart restaurantId={id as string}/>
+                    <Cart setOrderLoading={() => setOrderLoading(true)} restaurantId={id as string} />
                 </Modal>
             )}
             <h1 className="text-2xl text-center py-4">{restaurant.name}</h1>
