@@ -21,9 +21,9 @@ export const DarkButton = ({ text, onClick, fullWidth }: IProps) => {
         </button>
     );
 };
-export const LinkButton = React.forwardRef<HTMLAnchorElement, IProps>(({text, href}: IProps, ref) => {
+export const LinkButton = React.forwardRef<HTMLAnchorElement, IProps>(({text, href, onClick}: IProps, ref) => {
     return (
-        <a href={href} ref={ref as React.LegacyRef<HTMLAnchorElement>} className="bg-white cursor-pointer hover:bg-gray-100 inline-block text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded mt-4">
+        <a href={href} onClick={onClick} ref={ref as React.LegacyRef<HTMLAnchorElement>} className="bg-white cursor-pointer hover:bg-gray-100 inline-block text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded mt-4">
             {text}
         </a>
     );
