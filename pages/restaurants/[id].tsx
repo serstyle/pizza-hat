@@ -44,6 +44,7 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
 
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const [orderLoading, setOrderLoading] = useState(false);
 
 
     useEffect(()=>{
@@ -61,7 +62,9 @@ const RestaurantView: NextPage<IProps> = ({ restaurant }) => {
         !cart.length && setIsOpen(false) 
     }, [cart]);
 
-
+    if (orderLoading) {
+        return <div>Order has been sent...</div>;
+    }
 
     return (
         <div className="mb-20">

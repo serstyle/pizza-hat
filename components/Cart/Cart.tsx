@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { CartContext } from '../../context/cartContext';
 import { postOrder } from '../../lib/api';
-import { Button } from '../Button/Button';
+import { DarkButton } from '../Button/Button';
 
 export interface IProps {
     restaurantId: string;
+    setOrderLoading: () => void;
 }
 
-export const Cart = ({restaurantId}: IProps) => {
+export const Cart = ({restaurantId, setOrderLoading}: IProps) => {
     const [totalPrice, setTotalPrice] = useState(0)
     
     const cartContext = useContext(CartContext);
@@ -23,9 +24,12 @@ export const Cart = ({restaurantId}: IProps) => {
 
     const handleOrder = async () => {
         const order = await postOrder(cart, restaurantId);
-        resetCart();
-        addOrder(`${order?.orderId}`);
-        router.push(`/orders/${order?.orderId}`);
+        if(order) {
+            resetCart();
+            setOrderLoading();
+            addOrder(`${order?.orderId}`);
+            router.push(`/orders/${order?.orderId}`);
+        }
     }
 
     return (
@@ -58,7 +62,7 @@ export const Cart = ({restaurantId}: IProps) => {
             })}
             <div className="pt-3">
                 <p>Total: <span className="font-semibold">{totalPrice} SEK</span></p>
-                <Button text='Order' onClick={handleOrder}/> 
+                <DarkButton fullWidth text='Order' onClick={handleOrder}/> 
             </div>
         </div>
     );
