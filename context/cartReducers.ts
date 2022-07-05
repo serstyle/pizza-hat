@@ -68,7 +68,6 @@ const setRestaurant = (restaurantId: string, state: CartState) => {
     return { ...state, restaurantId };
 };
 const addOrder = (orderId: string, state: CartState) => {
-    console.log(orderId, state)
     return { ...state, ordersId: [...state.ordersId, orderId] };
 };
 const setOrders = (ordersId: string[], state: CartState) => {
