@@ -14,7 +14,7 @@ export const Restaurants = ({ restaurants }: IProps) => {
     useEffect(() => {
         const r = sortRestaurants(restaurants);
         setSortedRestaurants(r);
-    }, []);
+    }, [lat, long]);
 
     const sortRestaurants = (restaurants: IRestaurant[]): ISortedRestaurant[] => {
         const sortedRestaurants = restaurants.map((r) => {
