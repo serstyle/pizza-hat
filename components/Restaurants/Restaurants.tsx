@@ -17,15 +17,20 @@ export const Restaurants = ({ restaurants }: IProps) => {
     }, [lat, long]);
 
     const sortRestaurants = (restaurants: IRestaurant[]): ISortedRestaurant[] => {
-        const sortedRestaurants = restaurants.map((r) => {
-            const distanceFromUser = distance(+lat, +long, r.latitude, r.longitude);
-            return {
-                ...r,
-                distanceFromUser,
-            };
-        });
-
-        return sortedRestaurants.sort((a, b) => a.distanceFromUser - b.distanceFromUser);
+        
+            const sortedRestaurants = restaurants.map((r) => {
+                const distanceFromUser = distance(+lat, +long, r.latitude, r.longitude);
+                return {
+                    ...r,
+                    distanceFromUser:  lat && long ? distanceFromUser : null,
+                };
+            });
+            if(lat && long) {
+                return sortedRestaurants.sort((a, b) => (a.distanceFromUser as number) - (b.distanceFromUser as number));
+            } else {
+                return sortedRestaurants;
+            }
+        
     };
 
     return (
